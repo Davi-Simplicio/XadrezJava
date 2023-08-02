@@ -8,8 +8,8 @@ public class Jogador {
     private ArrayList<Peca> pecas;
 
     public Jogador(String nome, String senha){
-        nome = this.nome;
-        senha = this.senha;
+        this.nome = nome;
+        this.senha = senha;
         this.pecas = new ArrayList<>();
     }
     public ArrayList<Peca> getPecas() {
@@ -34,6 +34,17 @@ public class Jogador {
             adversario.pecas.remove(pecaAdversaria);
         }
         return valida;
+    }
+
+    @Override
+    public String toString() {
+        return "Jogador{" +
+                "nome='" + nome + '\'' +
+                ", cor='" + cor + '\'' +
+                ", senha='" + senha + '\'' +
+                ", pontos=" + pontos +
+                ", pecas=" + pecas +
+                '}';
     }
 
     public void desistir(){

@@ -24,11 +24,14 @@ public class Peao extends Peca{
 
                 }
             }
-            if(posicoesTabuleiro.get(posicaoNoTabuleiro+9).getPeca().getCor().equals("Branco") && !validaExtremidade(posicaoNoTabuleiro + 1)){
-                possiveisMovimentos.add(posicoesTabuleiro.get(posicaoNoTabuleiro+9));
-            }
-            if(posicoesTabuleiro.get(posicaoNoTabuleiro+7).getPeca().getCor().equals("Branco") && !validaExtremidade(posicaoNoTabuleiro)){
-                possiveisMovimentos.add(posicoesTabuleiro.get(posicaoNoTabuleiro+7));
+            if (posicoesTabuleiro.get(posicaoNoTabuleiro+9).getPeca()!=null) {
+                if (posicoesTabuleiro.get(posicaoNoTabuleiro + 9).getPeca().getCor().equals("Branco") && !validaExtremidade(posicaoNoTabuleiro + 1)) {
+                    possiveisMovimentos.add(posicoesTabuleiro.get(posicaoNoTabuleiro + 9));
+                }
+            }if (posicoesTabuleiro.get(posicaoNoTabuleiro+7).getPeca()!=null) {
+                if (posicoesTabuleiro.get(posicaoNoTabuleiro + 7).getPeca().getCor().equals("Branco") && !validaExtremidade(posicaoNoTabuleiro)) {
+                    possiveisMovimentos.add(posicoesTabuleiro.get(posicaoNoTabuleiro + 7));
+                }
             }
         } else{
             if(posicoesTabuleiro.get(posicaoNoTabuleiro-8).getPeca()==null){

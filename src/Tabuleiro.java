@@ -59,9 +59,9 @@ public class Tabuleiro {
 
         for (Posicao posicao : posicoes){
             int i = posicoes.indexOf(posicao);
-            if (posicao.getPeca() == null && !possiveisMovimentos.contains(i)) {
+            if (posicao.getPeca() == null && !possiveisMovimentos.contains(posicao)) {
                 tabuleiroPossiveisJogadas += "[ ]";
-            }else if(possiveisMovimentos.contains(i) && posicao.getPeca()==null){
+            }else if(possiveisMovimentos.contains(posicao)){
                 tabuleiroPossiveisJogadas += "["+ i +"]";
             }else{
                 tabuleiroPossiveisJogadas += "[" + posicao.getPeca().getIcone() + "]";
@@ -73,16 +73,20 @@ public class Tabuleiro {
         return tabuleiroPossiveisJogadas;
     }
 
-    public String tabuleiroComNumeros() {
+    public String tabuleiroComNumeros(Jogador jogador) {
         String tabuleiroComNumerosPronto = "";
         for (Posicao posicao : posicoes) {
             if (posicao.getPeca() == null) {
                 tabuleiroComNumerosPronto += "[  ]";
             } else {
-                if (posicoes.indexOf(posicao)<10){
-                    tabuleiroComNumerosPronto += "[ " + posicoes.indexOf(posicao) + "]";
+                if (jogador.getPecas().contains(posicao.getPeca())) {
+                    if (posicoes.indexOf(posicao) < 10) {
+                        tabuleiroComNumerosPronto += "[" + 0 + posicoes.indexOf(posicao) + "]";
+                    } else {
+                        tabuleiroComNumerosPronto += "[" + posicoes.indexOf(posicao) + "]";
+                    }
                 }else{
-                    tabuleiroComNumerosPronto += "[" + posicoes.indexOf(posicao) + "]";
+                    tabuleiroComNumerosPronto += "[ " + posicao.getPeca().getIcone() + "]";
                 }
             }
             if ((posicoes.indexOf(posicao)+1)%8==0){

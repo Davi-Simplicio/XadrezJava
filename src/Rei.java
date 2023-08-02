@@ -24,18 +24,22 @@ public class Rei extends Peca {
                     indice == posicaoNoTabuleiro - 7) {
                 verificaPeca(posicao, possiveisMovimentos);
             }
-            if (validaExtremidade(posicaoNoTabuleiro + 1) && !(
-                    indice == posicaoNoTabuleiro - 7 ||
-                            indice == posicaoNoTabuleiro + 1 ||
-                            indice == posicaoNoTabuleiro + 9)) {
-                verificaPeca(posicao, possiveisMovimentos);
+            if (validaExtremidade(posicaoNoTabuleiro + 1) ) {
+                if (!(indice == posicaoNoTabuleiro - 7 ||
+                        indice == posicaoNoTabuleiro + 1 ||
+                        indice == posicaoNoTabuleiro + 9)){
+                    verificaPeca(posicao, possiveisMovimentos);
+
+                }
             }
             //coluna A
-            else if (validaExtremidade(posicaoNoTabuleiro) && !(
-                    indice == posicaoNoTabuleiro + 7 ||
-                            indice == posicaoNoTabuleiro - 1 ||
-                            indice == posicaoNoTabuleiro - 9)) {
-                verificaPeca(posicao, possiveisMovimentos);
+            else if (validaExtremidade(posicaoNoTabuleiro) ) {
+                if ( !(indice == posicaoNoTabuleiro + 7 ||
+                        indice == posicaoNoTabuleiro - 1 ||
+                        indice == posicaoNoTabuleiro - 9)){
+                    verificaPeca(posicao, possiveisMovimentos);
+
+                }
             }
         }
         return possiveisMovimentos;

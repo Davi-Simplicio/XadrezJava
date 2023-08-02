@@ -16,7 +16,7 @@ public class Torre extends Peca{
                 break;
             }
         }
-        for (int i = posicaoDoTabuleiro-8; i < 0; i-=8) {
+        for (int i = posicaoDoTabuleiro-8; i >= 0; i-=8) {
             if(verificaPeca(tabuleiro.getPosicoes().get(i),possiveisMovimentos)){
                 break;
             }
@@ -26,7 +26,7 @@ public class Torre extends Peca{
                 break;
             }
         }
-        for (int i = (validaExtremidade(posicaoDoTabuleiro) ? -1:posicaoDoTabuleiro-1); i < 0; i--) {
+        for (int i = (validaExtremidade(posicaoDoTabuleiro) ? -1:posicaoDoTabuleiro-1); i >= 0; i--) {
             if(verificaPeca(tabuleiro.getPosicoes().get(i),possiveisMovimentos) || validaExtremidade(i+1) ){
                 break;
             }
