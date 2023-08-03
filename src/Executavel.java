@@ -1,3 +1,4 @@
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -48,16 +49,19 @@ public class Executavel {
                 }
                 do {
                     pecaEscolhida = escolherPeca(jogadorAtual);
-                    posicaoEscolhida = escolherPosicao(pecaEscolhida);
-                    jogadorAtual.moverPeca(pecaEscolhida,posicaoEscolhida,tabuleiro,jogadorAtual);
+                    if (pecaEscolhida.possiveisMovimentos(tabuleiro).size()==0){
+                        System.out.println("Peça não pode se movimentar");
+                    }else{
+                        posicaoEscolhida = escolherPosicao(pecaEscolhida);
+                    }
                     if (validarVitoria(jogadorAdversario)){
                         System.out.println("Parabens "+jogadorAtual+"Você Venceu\n"+"Infelismente "+jogadorAdversario+"Perdeu");
                         break;
                     }
-                    if (pecaEscolhida.possiveisMovimentos(tabuleiro).size()==0){
-                        System.out.println("Peça não pode se movimentar");
-                    }
+
                 }while (pecaEscolhida.possiveisMovimentos(tabuleiro).size()==0);
+                jogadorAtual.moverPeca(pecaEscolhida,posicaoEscolhida,tabuleiro,jogadorAdversario);
+                pecaEscolhida.mover(tabuleiro,posicaoEscolhida);
 
             }
 
@@ -65,19 +69,61 @@ public class Executavel {
     }
 
     public static Peca escolherPeca(Jogador jogador){
-        System.out.println("Qual peça Você deseja usar?");
-        System.out.println(tabuleiro.toString()+"\n"+tabuleiro.tabuleiroComNumeros(jogador));
-        int opcao = sc.nextInt();
-        System.out.println(tabuleiro.getPosicoes().get(opcao).getPeca());
-        return tabuleiro.getPosicoes().get(opcao).getPeca();
+        int opcao = 0;
+        Peca peca;
+            do {
+                System.out.println("Qual peça Você deseja usar?");
+                System.out.println(tabuleiro.toString() + "\n" + tabuleiro.tabuleiroComNumeros(jogador));
+                opcao = sc.nextInt();
+                peca = tabuleiro.getPosicoes().get(opcao).getPeca() ;
+                if(peca != null) {
+                    if (!peca.getCor().equals(jogador.getCor())) {
+                        System.out.println("Esta peça não é sua");
+                    }
+                }else {
+                    System.out.println("Esta posição não possui um peça");
+                }
+        }while (peca==null || !peca.getCor().equals(jogador.getCor()));
+            return peca;
     }
     public static Posicao escolherPosicao(Peca peca){
         ArrayList<Posicao>possiveisJogadas = peca.possiveisMovimentos(tabuleiro);
+        int opcao=0;
+            do {
+                System.out.println("Para onde deseja andar");
+                System.out.println(tabuleiro.possiveisjogadas(possiveisJogadas));
+                opcao = sc.nextInt();
+                if (!possiveisJogadas.contains(tabuleiro.getPosicoes().get(opcao))){
+                    System.out.println("Local inválido");
+                }
+            }while (!possiveisJogadas.contains(tabuleiro.getPosicoes().get(opcao)));
 
-            System.out.println("Para onde deseja andar");
-            System.out.println(tabuleiro.possiveisjogadas(possiveisJogadas));
-            int opcao = sc.nextInt();
             return tabuleiro.getPosicoes().get(opcao);
+    }
+    public void promoverPeca(Posicao posicao,String cor){
+        Peca peca;
+        System.out.println("""
+                Promova este peão
+                [1]Rainha
+                [2]Bispo
+                [3]Torre
+                [4]Cavalo""");
+        int opcao = sc.nextInt();
+        switch (opcao){
+            case 1:
+                peca = new Rainha(cor,posicao);
+                break;
+            case 2:
+                peca = new Bispo(cor,posicao);
+                break;
+            case 3:
+                peca = new Torre(cor,posicao);
+                break;
+            case 4:
+                peca = new Cavalo(cor,posicao);
+                break;
+
+        }
 
     }
 }

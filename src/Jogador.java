@@ -16,6 +16,10 @@ public class Jogador {
         return pecas;
     }
 
+    public String getCor() {
+        return cor;
+    }
+
     public void setCor(String cor, Tabuleiro tabuleiro) {
         this.cor = cor;
 
