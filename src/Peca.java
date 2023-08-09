@@ -2,10 +2,10 @@ import javax.xml.namespace.QName;
 import java.util.ArrayList;
 
 public abstract class  Peca {
-    private String cor;
+    private final String cor;
     private Posicao posicao;
-    private String icone;
-    private ArrayList<Posicao> possiveisMovimentos = new ArrayList<>();
+    private final String icone;
+    private final ArrayList<Posicao> possiveisMovimentos = new ArrayList<>();
 
     public Peca(String cor,Posicao posicao, String icone) {
         this.cor = cor;
@@ -33,20 +33,17 @@ public abstract class  Peca {
 
     public boolean mover(Tabuleiro tabuleiro, Posicao posicao){
 
-        for (Posicao posicaoPossivel:this.possiveisMovimentos) {
-            if(posicaoPossivel == posicao){
-                //atribuindo a peça para a nova posição no tabuleiro
-                this.posicao.setPeca(null);
-                //removendo a peça da posição anterior no tabuleiro
-                posicao.setPeca(this);
-                //trocando a posição atual da peça no tabuleiro
-                this.posicao = posicao;
-                return true;
-            }
-        }
-        return false;
+            //atribuindo a peça para a nova posição no tabuleiro
+            posicao.setPeca(this);
+            //removendo a peça da posição anterior no tabuleiro
+            this.posicao.setPeca(null);
+            //trocando a posição atual da peça no tabuleiro
+            this.posicao = posicao;
+            return true;
+
     }
     public abstract void possiveisMovimentos(Tabuleiro tabuleiro);
+
     public boolean verificaPeca(Posicao posicao){
         if(posicao.getPeca() == null){
             this.possiveisMovimentos.add(posicao);
@@ -54,7 +51,6 @@ public abstract class  Peca {
         }else{
 
             if(!posicao.getPeca().getCor().equals(this.getCor())){
-
                 this.possiveisMovimentos.add(posicao);
             }
             return true;
@@ -75,16 +71,5 @@ public abstract class  Peca {
                 '}';
     }
 
-    public boolean verificaXeque(){
-        for (Posicao posicao:this.getPossiveisMovimentos()) {
-            if (posicao.getPeca() instanceof Rei){
-                this.getPossiveisMovimentos().remove(posicao);
-                return true;
-            }
-        }
-        return false;
-    }
-    private void percorrePossiveisMovimentos(Tabuleiro tabuleiro){
 
-    }
 }

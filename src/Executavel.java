@@ -24,6 +24,9 @@ Executavel {
 
 
     }
+    public static ArrayList<Jogador> getJogadores(){
+        return jogadores;
+    }
     private static boolean validarVitoria(Jogador adversario)
     {
         for(Posicao posicao : tabuleiro.getPosicoes()){
@@ -50,6 +53,7 @@ Executavel {
                 }
                 do {
                     pecaEscolhida = escolherPeca(jogadorAtual);
+                    pecaEscolhida.getPossiveisMovimentos().clear();
                     pecaEscolhida.possiveisMovimentos(tabuleiro);
                     if (pecaEscolhida.getPossiveisMovimentos().size()==0){
                         System.out.println("Peça não pode se movimentar");
@@ -61,11 +65,9 @@ Executavel {
                         break;
                     }
 
-
                 }while (pecaEscolhida.getPossiveisMovimentos().size()==0);
                 jogadorAtual.moverPeca(pecaEscolhida,posicaoEscolhida,tabuleiro,jogadorAdversario);
                 System.out.println(posicaoEscolhida);
-                pecaEscolhida.mover(tabuleiro,posicaoEscolhida);
                 if (pecaEscolhida instanceof Peao){
                     if (tabuleiro.getPosicoes().indexOf(pecaEscolhida.getPosicao())<=7 || tabuleiro.getPosicoes().indexOf(pecaEscolhida.getPosicao())>=56){
                         jogadorAtual.getPecas().remove(pecaEscolhida);
@@ -86,7 +88,7 @@ Executavel {
         Peca peca;
             do {
                 System.out.println("Qual peça Você deseja usar?");
-                System.out.println(tabuleiro.toString() + "\n" + tabuleiro.tabuleiroComNumeros(jogador));
+                System.out.println(tabuleiro.toString() + "\n" + tabuleiro.tabuleiroComNumeros(jogador,tabuleiro));
                 opcao = sc.nextInt();
                 peca = tabuleiro.getPosicoes().get(opcao).getPeca() ;
                 if(peca != null) {
@@ -104,6 +106,7 @@ Executavel {
         int opcao=0;
             do {
                 System.out.println("Para onde deseja andar");
+
                 System.out.println(tabuleiro.possiveisjogadas(possiveisJogadas));
                 opcao = sc.nextInt();
                 if (!possiveisJogadas.contains(tabuleiro.getPosicoes().get(opcao))){

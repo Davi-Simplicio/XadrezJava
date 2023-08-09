@@ -35,40 +35,44 @@ public class Peao extends Peca{
         ArrayList<Posicao> posicoesTabuleiro= tabuleiro.getPosicoes();
         int posicaoNoTabuleiro = tabuleiro.getPosicoes().indexOf(posicaoAtual);
         Posicao posicao = posicoesTabuleiro.get(posicaoNoTabuleiro);
-        if(this.getCor().equals("Preto")){
-            if (tabuleiro.getPosicoes().indexOf(posicoesTabuleiro.get(posicaoNoTabuleiro))<56) {
-                if (posicoesTabuleiro.get(posicaoNoTabuleiro + 8).getPeca() == null) {
-                    getPossiveisMovimentos().add(posicoesTabuleiro.get(posicaoNoTabuleiro + 8));
-                    if (this.primMov) {
-                        if (posicoesTabuleiro.get(posicaoNoTabuleiro + 16).getPeca() == null) {
-                            getPossiveisMovimentos().add(posicoesTabuleiro.get(posicaoNoTabuleiro + 16));
-                        }
+        if(this.getCor().equals("Preto")) {
+            if (tabuleiro.getPosicoes().indexOf(posicoesTabuleiro.get(posicaoNoTabuleiro)) > 7 ||
+                    tabuleiro.getPosicoes().indexOf(posicoesTabuleiro.get(posicaoNoTabuleiro))<56){
+                if (tabuleiro.getPosicoes().indexOf(posicoesTabuleiro.get(posicaoNoTabuleiro)) < 56) {
+                    if (posicoesTabuleiro.get(posicaoNoTabuleiro + 8).getPeca() == null) {
+                        getPossiveisMovimentos().add(posicoesTabuleiro.get(posicaoNoTabuleiro + 8));
+                        if (this.primMov) {
+                            if (posicoesTabuleiro.get(posicaoNoTabuleiro + 16).getPeca() == null) {
+                                verificaPeca(posicoesTabuleiro.get(posicaoNoTabuleiro + 16));
+                            }
 
-                    }
-                }
-                if (posicoesTabuleiro.get(posicaoNoTabuleiro + 9).getPeca() != null) {
-                    if (posicoesTabuleiro.get(posicaoNoTabuleiro + 9).getPeca().getCor().equals("Branco")) {
-                        if (!validaExtremidade(posicaoNoTabuleiro + 1)) {
-                            getPossiveisMovimentos().add(posicoesTabuleiro.get(posicaoNoTabuleiro + 9));
                         }
                     }
-                }
-                if (posicoesTabuleiro.get(posicaoNoTabuleiro + 7).getPeca() != null) {
-                    if (posicoesTabuleiro.get(posicaoNoTabuleiro + 7).getPeca().getCor().equals("Branco")) {
-                        if (!validaExtremidade(posicaoNoTabuleiro)) {
-                            getPossiveisMovimentos().add(posicoesTabuleiro.get(posicaoNoTabuleiro + 7));
+                    if (posicoesTabuleiro.get(posicaoNoTabuleiro + 9).getPeca() != null) {
+                        if (posicoesTabuleiro.get(posicaoNoTabuleiro + 9).getPeca().getCor().equals("Branco")) {
+                            if (!validaExtremidade(posicaoNoTabuleiro + 1)) {
+                                verificaPeca(posicoesTabuleiro.get(posicaoNoTabuleiro + 9));
+                            }
                         }
                     }
+                    if (posicoesTabuleiro.get(posicaoNoTabuleiro + 7).getPeca() != null) {
+                        if (posicoesTabuleiro.get(posicaoNoTabuleiro + 7).getPeca().getCor().equals("Branco")) {
+                            if (!validaExtremidade(posicaoNoTabuleiro)) {
+                                verificaPeca(posicoesTabuleiro.get(posicaoNoTabuleiro + 7));
+                            }
+                        }
+                    }
+
                 }
-            }
+        }
         }else{
             if(tabuleiro.getPosicoes().indexOf(posicoesTabuleiro.get(posicaoNoTabuleiro))>7 ){
                 if (posicoesTabuleiro.get(posicaoNoTabuleiro-8).getPeca()==null){
-                    getPossiveisMovimentos().add(posicoesTabuleiro.get(posicaoNoTabuleiro-8));
+                    verificaPeca(posicoesTabuleiro.get(posicaoNoTabuleiro-8));
                 }
                 if(this.primMov){
                     if(posicoesTabuleiro.get(posicaoNoTabuleiro-16).getPeca()==null){
-                        getPossiveisMovimentos().add(posicoesTabuleiro.get(posicaoNoTabuleiro-16));
+                        verificaPeca(posicoesTabuleiro.get(posicaoNoTabuleiro-16));
                     }
 
                 }
@@ -77,14 +81,14 @@ public class Peao extends Peca{
                 if (posicoesTabuleiro.get(posicaoNoTabuleiro - 9).getPeca() != null) {
                     if (posicoesTabuleiro.get(posicaoNoTabuleiro - 9).getPeca().getCor().equals("Preto")) {
                         if (!validaExtremidade(posicaoNoTabuleiro)) {
-                            getPossiveisMovimentos().add(posicoesTabuleiro.get(posicaoNoTabuleiro - 9));
+                            verificaPeca(posicoesTabuleiro.get(posicaoNoTabuleiro - 9));
                         }
                     }
                 }
                 if (posicoesTabuleiro.get(posicaoNoTabuleiro - 7).getPeca() != null) {
                     if (posicoesTabuleiro.get(posicaoNoTabuleiro - 7).getPeca().getCor().equals("Preto")) {
                         if (!validaExtremidade(posicaoNoTabuleiro + 1)) {
-                            getPossiveisMovimentos().add(posicoesTabuleiro.get(posicaoNoTabuleiro - 7));
+                            verificaPeca(posicoesTabuleiro.get(posicaoNoTabuleiro - 7));
 
                         }
                     }

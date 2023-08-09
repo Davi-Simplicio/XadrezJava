@@ -73,13 +73,17 @@ public class Tabuleiro {
         return tabuleiroPossiveisJogadas;
     }
 
-    public String tabuleiroComNumeros(Jogador jogador) {
+    public String tabuleiroComNumeros(Jogador jogador, Tabuleiro tabuleiro) {
         String tabuleiroComNumerosPronto = "";
         for (Posicao posicao : posicoes) {
+            if (posicao.getPeca()!=null){
+                gerarPossiveisMovimentos(tabuleiro);
+                posicao.getPeca().possiveisMovimentos(tabuleiro);
+            }
             if (posicao.getPeca() == null) {
                 tabuleiroComNumerosPronto += "[  ]";
             } else {
-                if (jogador.getPecas().contains(posicao.getPeca())) {
+                if (jogador.getPecas().contains(posicao.getPeca()) && posicao.getPeca().getPossiveisMovimentos().size()!=0) {
                     if (posicoes.indexOf(posicao) < 10) {
                         tabuleiroComNumerosPronto += "[" + 0 + posicoes.indexOf(posicao) + "]";
                     } else {
@@ -109,5 +113,22 @@ public class Tabuleiro {
             }
         }
         return tabuleiroPronto;
+    }
+    public  void gerarPossiveisMovimentos(Tabuleiro tabuleiro){
+        for (Posicao posicao :tabuleiro.getPosicoes()) {
+            if (posicao.getPeca()!=null){
+                posicao.getPeca().possiveisMovimentos(tabuleiro);
+                for (Posicao posicao1:posicao.getPeca().getPossiveisMovimentos()) {
+                    if (posicao1.getPeca()!=null){
+                        if (posicao1.getPeca() instanceof Rei){
+
+                        }else{
+                            posicao1.getPeca().getPossiveisMovimentos().remove(posicao1);
+                        }
+                    }
+
+                }
+            }
+        }
     }
 }
