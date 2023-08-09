@@ -5,8 +5,7 @@ public class Cavalo extends Peca{
         super(cor,posicao,cor.equals("Branco") ? "♞" : "♘");
     }
     @Override
-    public ArrayList<Posicao> possiveisMovimentos(Tabuleiro tabuleiro) {
-        ArrayList<Posicao> possiveisMovimentos = new ArrayList<>();
+    public void possiveisMovimentos(Tabuleiro tabuleiro) {
 
         Posicao posicaoAtual = this.getPosicao();
         int posicaoNoTabuleiro = tabuleiro.getPosicoes().indexOf(posicaoAtual);
@@ -28,7 +27,7 @@ public class Cavalo extends Peca{
                             indice ==posicaoNoTabuleiro - 6||
                             indice==posicaoNoTabuleiro +10||
                             indice ==posicaoNoTabuleiro+17)){
-                        verificaPeca(posicao,possiveisMovimentos);
+                        verificaPeca(posicao);
 
                     }
                 }
@@ -38,32 +37,31 @@ public class Cavalo extends Peca{
                             indice ==posicaoNoTabuleiro +6||
                             indice==posicaoNoTabuleiro -10||
                             indice ==posicaoNoTabuleiro-17)){
-                        verificaPeca(posicao,possiveisMovimentos);
+                        verificaPeca(posicao);
                     }
                 }//coluna B
                 else if (validaExtremidade(posicaoNoTabuleiro-1)  ){
                         if (!(indice ==posicaoNoTabuleiro +6 ||
                                 indice==posicaoNoTabuleiro -10)){
-                            verificaPeca(posicao,possiveisMovimentos);
+                            verificaPeca(posicao);
                         }
                     }
                 //coluna G
                 else if (validaExtremidade(posicaoNoTabuleiro+2)  ){
                     if (!(indice ==posicaoNoTabuleiro -15 ||
                             indice==posicaoNoTabuleiro +17)){
-                        verificaPeca(posicao,possiveisMovimentos);
+                        verificaPeca(posicao);
 
                     }
                 }
 
                 //não é canto
                 else{
-                    possiveisMovimentos.add(posicao);
+                    getPossiveisMovimentos().add(posicao);
                 }
 
             }
         }
-        return possiveisMovimentos;
     }
 
     @Override

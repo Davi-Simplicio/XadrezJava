@@ -7,10 +7,10 @@ public class Rei extends Peca {
     private boolean primeiroMovimento;
 
     @Override
-    public ArrayList<Posicao> possiveisMovimentos(Tabuleiro tabuleiro) {
+    public void possiveisMovimentos(Tabuleiro tabuleiro) {
         Posicao posicaoAtual = this.getPosicao();
+        boolean xeque = false;
         int posicaoNoTabuleiro = tabuleiro.getPosicoes().indexOf(posicaoAtual);
-        ArrayList<Posicao> possiveisMovimentos = new ArrayList<>();
 
         for (Posicao posicao : tabuleiro.getPosicoes()) {
             int indice = tabuleiro.getPosicoes().indexOf(posicao);
@@ -22,13 +22,14 @@ public class Rei extends Peca {
                     indice == posicaoNoTabuleiro - 8 ||
                     indice == posicaoNoTabuleiro - 9 ||
                     indice == posicaoNoTabuleiro - 7) {
-                verificaPeca(posicao, possiveisMovimentos);
+
+                    verificaPeca(posicao);
             }
             if (validaExtremidade(posicaoNoTabuleiro + 1) ) {
                 if (!(indice == posicaoNoTabuleiro - 7 ||
                         indice == posicaoNoTabuleiro + 1 ||
                         indice == posicaoNoTabuleiro + 9)){
-                    verificaPeca(posicao, possiveisMovimentos);
+                    verificaPeca(posicao);
 
                 }
             }
@@ -37,12 +38,11 @@ public class Rei extends Peca {
                 if ( !(indice == posicaoNoTabuleiro + 7 ||
                         indice == posicaoNoTabuleiro - 1 ||
                         indice == posicaoNoTabuleiro - 9)){
-                    verificaPeca(posicao, possiveisMovimentos);
+                    verificaPeca(posicao);
 
                 }
             }
         }
-        return possiveisMovimentos;
     }
 
     @Override

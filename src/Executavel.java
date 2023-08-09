@@ -2,7 +2,8 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Executavel {
+public class
+Executavel {
     public static ArrayList<Jogador>jogadores = new ArrayList<>();
     public static Scanner sc = new Scanner(System.in);
     public static Tabuleiro tabuleiro = new Tabuleiro();
@@ -49,7 +50,8 @@ public class Executavel {
                 }
                 do {
                     pecaEscolhida = escolherPeca(jogadorAtual);
-                    if (pecaEscolhida.possiveisMovimentos(tabuleiro).size()==0){
+                    pecaEscolhida.possiveisMovimentos(tabuleiro);
+                    if (pecaEscolhida.getPossiveisMovimentos().size()==0){
                         System.out.println("Peça não pode se movimentar");
                     }else{
                         posicaoEscolhida = escolherPosicao(pecaEscolhida);
@@ -59,10 +61,21 @@ public class Executavel {
                         break;
                     }
 
-                }while (pecaEscolhida.possiveisMovimentos(tabuleiro).size()==0);
-                jogadorAtual.moverPeca(pecaEscolhida,posicaoEscolhida,tabuleiro,jogadorAdversario);
-                pecaEscolhida.mover(tabuleiro,posicaoEscolhida);
 
+                }while (pecaEscolhida.getPossiveisMovimentos().size()==0);
+                jogadorAtual.moverPeca(pecaEscolhida,posicaoEscolhida,tabuleiro,jogadorAdversario);
+                System.out.println(posicaoEscolhida);
+                pecaEscolhida.mover(tabuleiro,posicaoEscolhida);
+                if (pecaEscolhida instanceof Peao){
+                    if (tabuleiro.getPosicoes().indexOf(pecaEscolhida.getPosicao())<=7 || tabuleiro.getPosicoes().indexOf(pecaEscolhida.getPosicao())>=56){
+                        jogadorAtual.getPecas().remove(pecaEscolhida);
+                        Peca peca = promoverPeca(pecaEscolhida.getPosicao(),pecaEscolhida.getCor());
+                        jogadorAtual.getPecas().add(peca);
+                        posicaoEscolhida.setPeca(peca);
+
+                        System.out.println(peca);
+                    }
+                }
             }
 
         }while (!validarVitoria(jogadorAdversario));
@@ -87,7 +100,7 @@ public class Executavel {
             return peca;
     }
     public static Posicao escolherPosicao(Peca peca){
-        ArrayList<Posicao>possiveisJogadas = peca.possiveisMovimentos(tabuleiro);
+        ArrayList<Posicao>possiveisJogadas = peca.getPossiveisMovimentos();
         int opcao=0;
             do {
                 System.out.println("Para onde deseja andar");
@@ -100,8 +113,8 @@ public class Executavel {
 
             return tabuleiro.getPosicoes().get(opcao);
     }
-    public void promoverPeca(Posicao posicao,String cor){
-        Peca peca;
+    public static Peca promoverPeca(Posicao posicao,String cor){
+        Peca peca=null;
         System.out.println("""
                 Promova este peão
                 [1]Rainha
@@ -124,6 +137,6 @@ public class Executavel {
                 break;
 
         }
-
+        return peca;
     }
 }
