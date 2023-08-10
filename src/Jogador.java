@@ -38,6 +38,7 @@ public class Jogador {
         if(pecaAdversaria!=null && valida){
             adversario.pecas.remove(pecaAdversaria);
         }
+
         return valida;
     }
 

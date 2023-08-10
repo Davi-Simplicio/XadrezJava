@@ -63,8 +63,6 @@ public class Cavalo extends Peca{
 
                 //não é canto
                 else{
-
-
                     verificaPeca(posicao);
                 }
 
