@@ -54,8 +54,7 @@ Executavel {
                 do {
                     verificaXeque(jogadorAdversario);
                     pecaEscolhida = escolherPeca(jogadorAtual);
-                    pecaEscolhida.getPossiveisMovimentos().clear();
-                    pecaEscolhida.possiveisMovimentos(tabuleiro);
+                    simulacao(jogadorAtual, tabuleiro);
                     if (pecaEscolhida.getPossiveisMovimentos().size() == 0) {
                         System.out.println("Peça não pode se movimentar");
                     } else {
@@ -67,19 +66,21 @@ Executavel {
                     }
 
                 } while (pecaEscolhida.getPossiveisMovimentos().size() == 0);
-                jogadorAtual.moverPeca(pecaEscolhida, posicaoEscolhida, tabuleiro, jogadorAdversario);
-                System.out.println(posicaoEscolhida);
-                if (pecaEscolhida instanceof Peao) {
-                    if (tabuleiro.getPosicoes().indexOf(pecaEscolhida.getPosicao()) <= 7 || tabuleiro.getPosicoes().indexOf(pecaEscolhida.getPosicao()) >= 56) {
-                        jogadorAtual.getPecas().remove(pecaEscolhida);
-                        Peca peca = promoverPeca(pecaEscolhida.getPosicao(), pecaEscolhida.getCor());
-                        jogadorAtual.getPecas().add(peca);
-                        posicaoEscolhida.setPeca(peca);
+                if (posicaoEscolhida != null) {
+                    jogadorAtual.moverPeca(pecaEscolhida, posicaoEscolhida, tabuleiro, jogadorAdversario);
 
-                        System.out.println(peca);
+                    if (pecaEscolhida instanceof Peao) {
+                        if (tabuleiro.getPosicoes().indexOf(pecaEscolhida.getPosicao()) <= 7 || tabuleiro.getPosicoes().indexOf(pecaEscolhida.getPosicao()) >= 56) {
+                            jogadorAtual.getPecas().remove(pecaEscolhida);
+                            Peca peca = promoverPeca(pecaEscolhida.getPosicao(), pecaEscolhida.getCor());
+                            jogadorAtual.getPecas().add(peca);
+                            posicaoEscolhida.setPeca(peca);
+                            System.out.println(peca);
+                        }
                     }
                 }
-                    simulacao(jogadorAtual,tabuleiro);
+
+                pecaEscolhida.getPossiveisMovimentos().clear();
             }
 
         } while (!validarVitoria(jogadorAdversario));
@@ -152,29 +153,29 @@ Executavel {
 
         for (Peca peca : jogador.getPecas()) {
             for (Posicao posicaoPossivelMovimento : peca.getPossiveisMovimentos()) {
-                if (posicaoPossivelMovimento.getPeca() instanceof Peao) {
+                if (posicaoPossivelMovimento.getPeca() instanceof Rei) {
                     return true;
                 }
             }
         }
         return false;
     }
-    public static void simulacao(Jogador jogador,Tabuleiro tabuleiro){
-        Posicao posicaoAntiga=null;
-        ArrayList<Posicao> posicaosRemovidas = new ArrayList<>();
-        for (Peca peca:jogador.getPecas()) {
-            peca.possiveisMovimentos(tabuleiro);
-            posicaoAntiga = peca.getPosicao();
-            for (Posicao posicao: peca.getPossiveisMovimentos()) {
-                peca.mover(tabuleiro, posicao);
-                System.out.println(posicao);
-                System.out.println(posicaoAntiga);
-                if (verificaXeque(jogador)) {
-                    posicaosRemovidas.add(posicao);
-                }
-                peca.mover(tabuleiro, posicaoAntiga);
-            }
 
+    public static void simulacao(Jogador jogador, Tabuleiro tabuleiro) {
+        int posicaoAntiga;
+        ArrayList<Posicao> posicaosRemovidas = new ArrayList<>();
+        for (Peca peca : jogador.getPecas()) {
+            posicaoAntiga = tabuleiro.getPosicoes().indexOf(peca.getPosicao());
+            peca.possiveisMovimentos(tabuleiro);
+            for (Posicao posicao : peca.getPossiveisMovimentos()) {
+                if (posicao.getPeca()!=null){
+                    peca.mover(tabuleiro, posicao);
+                    if (verificaXeque(jogador)) {
+                        posicaosRemovidas.add(posicao);
+                    }
+                    peca.mover(tabuleiro, tabuleiro.getPosicoes().get(posicaoAntiga));
+                }
+            }
             peca.getPossiveisMovimentos().removeAll(posicaosRemovidas);
         }
     }

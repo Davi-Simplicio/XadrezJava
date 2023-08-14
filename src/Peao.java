@@ -14,8 +14,6 @@ public class Peao extends Peca{
     @Override
     public boolean mover(Tabuleiro tabuleiro, Posicao posicao){
 
-        for (Posicao posicaoPossivel:getPossiveisMovimentos()) {
-            if(posicaoPossivel == posicao){
                 //atribuindo a peça para a nova posição no tabuleiro
                 posicao.setPeca(this);
                 //removendo a peça da posição anterior no tabuleiro
@@ -24,9 +22,6 @@ public class Peao extends Peca{
                 this.setPosicao(posicao);
                 this.primMov = false;
                 return true;
-            }
-        }
-        return false;
     }
 
     @Override
