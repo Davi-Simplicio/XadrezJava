@@ -8,6 +8,7 @@ public class Cavalo extends Peca{
     public void possiveisMovimentos(Tabuleiro tabuleiro) {
 
         Posicao posicaoAtual = this.getPosicao();
+        this.getPossiveisMovimentos().clear();
         int posicaoNoTabuleiro = tabuleiro.getPosicoes().indexOf(posicaoAtual);
 
 

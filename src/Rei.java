@@ -1,15 +1,17 @@
 import java.util.ArrayList;
 
 public class Rei extends Peca {
-    public Rei(String cor,Posicao posicao) {
-        super(cor,posicao,cor.equals("Branco") ? "♚" : "♔");
+    public Rei(String cor, Posicao posicao) {
+        super(cor, posicao, cor.equals("Branco") ? "♚" : "♔");
     }
+
     private boolean primeiroMovimento;
 
     @Override
     public void possiveisMovimentos(Tabuleiro tabuleiro) {
         Posicao posicaoAtual = this.getPosicao();
-        boolean xeque = false;
+        this.getPossiveisMovimentos().clear();
+
         int posicaoNoTabuleiro = tabuleiro.getPosicoes().indexOf(posicaoAtual);
 
         for (Posicao posicao : tabuleiro.getPosicoes()) {
@@ -23,23 +25,24 @@ public class Rei extends Peca {
                     indice == posicaoNoTabuleiro - 9 ||
                     indice == posicaoNoTabuleiro - 7) {
 
-                    verificaPeca(posicao);
-            }
-            if (validaExtremidade(posicaoNoTabuleiro + 1) ) {
-                if (!(indice == posicaoNoTabuleiro - 7 ||
-                        indice == posicaoNoTabuleiro + 1 ||
-                        indice == posicaoNoTabuleiro + 9)){
-                    verificaPeca(posicao);
+                if (validaExtremidade(posicaoNoTabuleiro + 1)) {
+                    if (!(indice == posicaoNoTabuleiro - 7 ||
+                            indice == posicaoNoTabuleiro + 1 ||
+                            indice == posicaoNoTabuleiro + 9)) {
+                        verificaPeca(posicao);
 
+                    }
                 }
-            }
-            //coluna A
-            else if (validaExtremidade(posicaoNoTabuleiro) ) {
-                if ( !(indice == posicaoNoTabuleiro + 7 ||
-                        indice == posicaoNoTabuleiro - 1 ||
-                        indice == posicaoNoTabuleiro - 9)){
-                    verificaPeca(posicao);
+                //coluna A
+                else if (validaExtremidade(posicaoNoTabuleiro)) {
+                    if (!(indice == posicaoNoTabuleiro + 7 ||
+                            indice == posicaoNoTabuleiro - 1 ||
+                            indice == posicaoNoTabuleiro - 9)) {
+                        verificaPeca(posicao);
 
+                    }
+                } else {
+                    verificaPeca(posicao);
                 }
             }
         }

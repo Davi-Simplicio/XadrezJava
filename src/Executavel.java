@@ -28,11 +28,15 @@ Executavel {
     }
 
     private static boolean validarVitoria(Jogador adversario) {
-        for (Posicao posicao : tabuleiro.getPosicoes()) {
-            if (posicao.getPeca() instanceof Rei &&
-                    adversario.getPecas().contains(posicao.getPeca())) {
+        ArrayList<Peca> pecasParaXequeMate = new ArrayList<>();
+        for (Peca peca : adversario.getPecas()) {
+            if (peca.getPossiveisMovimentos().size()!=0){
+              pecasParaXequeMate.add(peca);
+            }
+            if (peca instanceof Rei && pecasParaXequeMate.size()>0) {
                 return false;
             }
+
         }
         return true;
     }
@@ -47,23 +51,18 @@ Executavel {
                 for (Jogador jogador : jogadores) {
                     if (jogadorAtual != jogador) {
                         jogadorAdversario = jogador;
-                        System.out.println(jogadorAdversario);
                     }
                 }
-
+                simulacao(jogadorAtual, tabuleiro,jogadorAdversario);
                 do {
-                    verificaXeque(jogadorAdversario);
+
                     pecaEscolhida = escolherPeca(jogadorAtual);
-                    simulacao(jogadorAtual, tabuleiro);
                     if (pecaEscolhida.getPossiveisMovimentos().size() == 0) {
                         System.out.println("Peça não pode se movimentar");
                     } else {
                         posicaoEscolhida = escolherPosicao(pecaEscolhida);
                     }
-                    if (validarVitoria(jogadorAdversario)) {
-                        System.out.println("Parabens " + jogadorAtual + "Você Venceu\n" + "Infelismente " + jogadorAdversario + "Perdeu");
-                        break;
-                    }
+
 
                 } while (pecaEscolhida.getPossiveisMovimentos().size() == 0);
                 if (posicaoEscolhida != null) {
@@ -75,12 +74,13 @@ Executavel {
                             Peca peca = promoverPeca(pecaEscolhida.getPosicao(), pecaEscolhida.getCor());
                             jogadorAtual.getPecas().add(peca);
                             posicaoEscolhida.setPeca(peca);
-                            System.out.println(peca);
                         }
                     }
+                    if (validarVitoria(jogadorAdversario)) {
+                        System.out.println("Parabens " + jogadorAtual + "Você Venceu\n" + "Infelismente " + jogadorAdversario + "Perdeu");
+                        break;
+                    }
                 }
-
-                pecaEscolhida.getPossiveisMovimentos().clear();
             }
 
         } while (!validarVitoria(jogadorAdversario));
@@ -110,7 +110,6 @@ Executavel {
         int opcao = 0;
         do {
             System.out.println("Para onde deseja andar");
-
             System.out.println(tabuleiro.possiveisjogadas(possiveisJogadas));
             opcao = sc.nextInt();
             if (!possiveisJogadas.contains(tabuleiro.getPosicoes().get(opcao))) {
@@ -149,11 +148,14 @@ Executavel {
     }
 
     public static boolean verificaXeque(Jogador jogador) {
-
+        for (Peca pecaAdversaria:jogador.getPecas()){
+            pecaAdversaria.possiveisMovimentos(tabuleiro);
+        }
 
         for (Peca peca : jogador.getPecas()) {
             for (Posicao posicaoPossivelMovimento : peca.getPossiveisMovimentos()) {
                 if (posicaoPossivelMovimento.getPeca() instanceof Rei) {
+                    System.out.println("Entrou em Xeque");
                     return true;
                 }
             }
@@ -161,20 +163,24 @@ Executavel {
         return false;
     }
 
-    public static void simulacao(Jogador jogador, Tabuleiro tabuleiro) {
+    public static void simulacao(Jogador jogador, Tabuleiro tabuleiro,Jogador jogadorAdversario) {
         int posicaoAntiga;
+        Peca pecaAntiga=null;
         ArrayList<Posicao> posicaosRemovidas = new ArrayList<>();
+
         for (Peca peca : jogador.getPecas()) {
             posicaoAntiga = tabuleiro.getPosicoes().indexOf(peca.getPosicao());
             peca.possiveisMovimentos(tabuleiro);
             for (Posicao posicao : peca.getPossiveisMovimentos()) {
-                if (posicao.getPeca()!=null){
+
+                    pecaAntiga = posicao.getPeca();
                     peca.mover(tabuleiro, posicao);
-                    if (verificaXeque(jogador)) {
+
+                    if (verificaXeque(jogadorAdversario)) {
                         posicaosRemovidas.add(posicao);
                     }
                     peca.mover(tabuleiro, tabuleiro.getPosicoes().get(posicaoAntiga));
-                }
+                    posicao.setPeca(pecaAntiga);
             }
             peca.getPossiveisMovimentos().removeAll(posicaosRemovidas);
         }

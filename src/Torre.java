@@ -8,6 +8,8 @@ public class Torre extends Peca{
     @Override
     public void possiveisMovimentos(Tabuleiro tabuleiro) {
         Posicao posicaoAtual = this.getPosicao();
+        this.getPossiveisMovimentos().clear();
+
         int posicaoDoTabuleiro = tabuleiro.getPosicoes().indexOf(posicaoAtual);
         for (int i = posicaoDoTabuleiro+8; i < tabuleiro.getPosicoes().size(); i+=8) {
             if(verificaPeca(tabuleiro.getPosicoes().get(i))){

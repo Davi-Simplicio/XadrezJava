@@ -27,6 +27,7 @@ public class Peao extends Peca{
     @Override
     public void possiveisMovimentos(Tabuleiro tabuleiro) {
         Posicao posicaoAtual = this.getPosicao();
+        this.getPossiveisMovimentos().clear();
         ArrayList<Posicao> posicoesTabuleiro= tabuleiro.getPosicoes();
         int posicaoNoTabuleiro = tabuleiro.getPosicoes().indexOf(posicaoAtual);
         Posicao posicao = posicoesTabuleiro.get(posicaoNoTabuleiro);
@@ -38,7 +39,7 @@ public class Peao extends Peca{
                         getPossiveisMovimentos().add(posicoesTabuleiro.get(posicaoNoTabuleiro + 8));
                         if (this.primMov) {
                             if (posicoesTabuleiro.get(posicaoNoTabuleiro + 16).getPeca() == null) {
-                                verificaPeca(posicoesTabuleiro.get(posicaoNoTabuleiro + 16));
+                                this.getPossiveisMovimentos().add(posicoesTabuleiro.get(posicaoNoTabuleiro + 16));
                             }
 
                         }
@@ -46,14 +47,14 @@ public class Peao extends Peca{
                     if (posicoesTabuleiro.get(posicaoNoTabuleiro + 9).getPeca() != null) {
                         if (posicoesTabuleiro.get(posicaoNoTabuleiro + 9).getPeca().getCor().equals("Branco")) {
                             if (!validaExtremidade(posicaoNoTabuleiro + 1)) {
-                                verificaPeca(posicoesTabuleiro.get(posicaoNoTabuleiro + 9));
+                                this.getPossiveisMovimentos().add(posicoesTabuleiro.get(posicaoNoTabuleiro + 9));
                             }
                         }
                     }
                     if (posicoesTabuleiro.get(posicaoNoTabuleiro + 7).getPeca() != null) {
                         if (posicoesTabuleiro.get(posicaoNoTabuleiro + 7).getPeca().getCor().equals("Branco")) {
                             if (!validaExtremidade(posicaoNoTabuleiro)) {
-                                verificaPeca(posicoesTabuleiro.get(posicaoNoTabuleiro + 7));
+                                this.getPossiveisMovimentos().add(posicoesTabuleiro.get(posicaoNoTabuleiro + 7));
                             }
                         }
                     }
@@ -62,12 +63,13 @@ public class Peao extends Peca{
         }
         }else{
             if(tabuleiro.getPosicoes().indexOf(posicoesTabuleiro.get(posicaoNoTabuleiro))>7 ){
+
                 if (posicoesTabuleiro.get(posicaoNoTabuleiro-8).getPeca()==null){
-                    verificaPeca(posicoesTabuleiro.get(posicaoNoTabuleiro-8));
+                    this.getPossiveisMovimentos().add(posicoesTabuleiro.get(posicaoNoTabuleiro-8));
                 }
                 if(this.primMov){
                     if(posicoesTabuleiro.get(posicaoNoTabuleiro-16).getPeca()==null){
-                        verificaPeca(posicoesTabuleiro.get(posicaoNoTabuleiro-16));
+                        this.getPossiveisMovimentos().add(posicoesTabuleiro.get(posicaoNoTabuleiro-16));
                     }
 
                 }
@@ -76,14 +78,14 @@ public class Peao extends Peca{
                 if (posicoesTabuleiro.get(posicaoNoTabuleiro - 9).getPeca() != null) {
                     if (posicoesTabuleiro.get(posicaoNoTabuleiro - 9).getPeca().getCor().equals("Preto")) {
                         if (!validaExtremidade(posicaoNoTabuleiro)) {
-                            verificaPeca(posicoesTabuleiro.get(posicaoNoTabuleiro - 9));
+                            this.getPossiveisMovimentos().add(posicoesTabuleiro.get(posicaoNoTabuleiro - 9));
                         }
                     }
                 }
                 if (posicoesTabuleiro.get(posicaoNoTabuleiro - 7).getPeca() != null) {
                     if (posicoesTabuleiro.get(posicaoNoTabuleiro - 7).getPeca().getCor().equals("Preto")) {
                         if (!validaExtremidade(posicaoNoTabuleiro + 1)) {
-                            verificaPeca(posicoesTabuleiro.get(posicaoNoTabuleiro - 7));
+                            this.getPossiveisMovimentos().add(posicoesTabuleiro.get(posicaoNoTabuleiro - 7));
 
                         }
                     }

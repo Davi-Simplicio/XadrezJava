@@ -33,13 +33,12 @@ public class Jogador {
 
     public boolean moverPeca(Peca peca, Posicao posicao,Tabuleiro tabuleiro, Jogador adversario){
         Peca pecaAdversaria = posicao.getPeca();
-        boolean valida = peca.mover(tabuleiro,posicao);
-
-        if(pecaAdversaria!=null && valida){
+        peca.mover(tabuleiro,posicao);
+        if(pecaAdversaria!=null){
             adversario.pecas.remove(pecaAdversaria);
         }
 
-        return valida;
+        return true;
     }
 
     @Override

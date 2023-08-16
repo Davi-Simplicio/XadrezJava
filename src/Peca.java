@@ -35,9 +35,9 @@ public abstract class  Peca {
 
             //atribuindo a peça para a nova posição no tabuleiro
             posicao.setPeca(this);
-            //removendo a peça da posição anterior no tabuleiro
+        //removendo a peça da posição anterior no tabuleiro
             this.posicao.setPeca(null);
-            //trocando a posição atual da peça no tabuleiro
+        //trocando a posição atual da peça no tabuleiro
             this.posicao = posicao;
             return true;
 

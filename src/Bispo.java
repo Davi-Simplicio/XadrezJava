@@ -7,6 +7,7 @@ public class Bispo extends Peca{
     @Override
     public void possiveisMovimentos(Tabuleiro tabuleiro) {
         Posicao posicaoAtual = this.getPosicao();
+        this.getPossiveisMovimentos().clear();
         int posicaoDoTabuleiro = tabuleiro.getPosicoes().indexOf(posicaoAtual);
 
 

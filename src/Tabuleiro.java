@@ -77,7 +77,7 @@ public class Tabuleiro {
         String tabuleiroComNumerosPronto = "";
         for (Posicao posicao : posicoes) {
             if (posicao.getPeca()!=null){
-                posicao.getPeca().possiveisMovimentos(tabuleiro);
+                posicao.getPeca().getPossiveisMovimentos();
             }
             if (posicao.getPeca() == null) {
                 tabuleiroComNumerosPronto += "[  ]";
